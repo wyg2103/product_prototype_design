@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>任务下发情况 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/mass-send.css" />
+</head>
+<body class="stats-page task-detail-page">
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs mass-page-tabs">
+        <div class="page-tab"><a href="mass-send.html">客户群发</a> <span class="close">×</span></div>
+        <div class="page-tab active" id="pageTabTitle">任务详情 <span class="close">×</span></div>
+      </div>
+      <section class="mass-content">
+        <div class="mass-scroll task-detail-scroll">
+          <!-- 任务概览 -->
+          <header class="task-detail-header" id="taskHeader"></header>
+
+          <!-- 主 Tab -->
+          <nav class="task-main-tabs" id="mainTabs">
+            <button type="button" class="task-main-tab active" data-panel="delivery">下发情况</button>
+            <button type="button" class="task-main-tab" data-panel="stats">执行数据</button>
+          </nav>
+
+          <!-- 面板：下发情况 -->
+          <div class="task-panel active" id="panelDelivery">
+            <div class="health-banner" id="healthBanner"></div>
+
+            <div class="detail-section" id="issuesSection">
+              <div class="detail-section-head">
+                <h3 class="detail-section-title">已知问题与原因</h3>
+                <a href="mass-send-guide.html" class="mass-help-link" id="guideLink">问题自查助手</a>
+              </div>
+              <div class="issue-list" id="issueList"></div>
+            </div>
+
+            <div class="detail-section">
+              <div class="detail-section-head">
+                <h3 class="detail-section-title">下发流程</h3>
+                <span class="sync-meta" id="syncMeta"></span>
+              </div>
+              <p class="section-hint">从创建到客户收到，共 5 步。绿色表示正常，橙色表示需关注，红色表示异常。</p>
+              <div class="pipeline" id="pipeline"></div>
+            </div>
+
+            <div class="detail-section">
+              <h3 class="detail-section-title" style="margin-bottom:14px">基础检查项</h3>
+              <div class="diagnose-cards" id="checkCards"></div>
+            </div>
+          </div>
+
+          <!-- 面板：执行数据 -->
+          <div class="task-panel" id="panelStats">
+            <p class="stats-update-time">
+              数据更新：<span id="statsUpdateTime">—</span>
+              <button type="button" class="btn-outline btn-sm" id="btnResync">刷新数据</button>
+            </p>
+
+            <div class="stats-cards" id="statsCards"></div>
+
+            <div class="chart-section">
+              <div class="chart-tabs">
+                <span class="chart-tab active" data-chart="hour">按时段分析</span>
+                <span class="chart-tab" data-chart="day">按天分析</span>
+              </div>
+              <div class="chart-grid">
+                <div class="chart-box">
+                  <h4>24 小时内员工执行情况</h4>
+                  <p class="chart-note">数据每小时刷新</p>
+                  <canvas class="chart-canvas" id="chartStaff"></canvas>
+                </div>
+                <div class="chart-box">
+                  <h4>24 小时内客户触达情况</h4>
+                  <p class="chart-note">数据每小时刷新</p>
+                  <canvas class="chart-canvas" id="chartCustomer"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <div class="detail-section-head">
+                <h3 class="detail-section-title">员工明细</h3>
+                <button type="button" class="btn-outline" id="btnExportEmp">导出</button>
+              </div>
+              <div class="inner-tabs">
+                <span class="inner-tab active" data-emp="executed">已执行</span>
+                <span class="inner-tab" data-emp="unexecuted">未执行</span>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>员工</th><th>手机号</th><th>部门</th>
+                      <th>任务状态</th><th>能否收到任务</th><th>企业微信版本</th>
+                      <th>下发时间</th><th>执行时间</th>
+                      <th>送达/未送达</th><th>提醒</th><th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="empTableBody"></tbody>
+                </table>
+              </div>
+              <p class="table-empty hidden" id="empEmpty">暂无员工数据，请先点击「刷新数据」</p>
+            </div>
+
+            <div class="detail-section">
+              <div class="detail-section-head">
+                <h3 class="detail-section-title">客户明细</h3>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>客户</th><th>手机号</th><th>所属员工</th><th>发送人</th>
+                      <th>状态</th><th>失败原因</th><th>发送时间</th>
+                    </tr>
+                  </thead>
+                  <tbody id="customerTableBody"></tbody>
+                </table>
+              </div>
+              <div class="pagination-bar">
+                <span>共 <strong id="customerTotal">0</strong> 条</span>
+              </div>
+              <p class="table-empty hidden" id="customerEmpty">暂无客户数据</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal modal-wide" onclick="event.stopPropagation()">
+      <div class="modal-header"><span id="modalTitle">提示</span><button type="button" class="modal-close" id="modalClose">×</button></div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer"><button type="button" class="btn-primary" id="modalOk">知道了</button></div>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/mass-send-data.js"></script>
+  <script src="js/mass-send-stats.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'reach', activeItem: 'mass-send' });</script>
+</body>
+</html>

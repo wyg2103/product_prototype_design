@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>群发问题自查 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/mass-send.css" />
+</head>
+<body class="guide-page">
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs mass-page-tabs">
+        <div class="page-tab"><a href="mass-send.html">客户群发</a> <span class="close">×</span></div>
+        <div class="page-tab active">问题自查助手 <span class="close">×</span></div>
+      </div>
+      <section class="mass-content guide-content">
+        <div class="mass-scroll guide-scroll">
+          <header class="guide-hero">
+            <div class="guide-hero-text">
+              <h1 id="guideTitle">群发问题自查助手</h1>
+              <p id="guideDesc">不用懂技术术语，按您遇到的情况逐步排查，快速找到原因和处理办法。</p>
+            </div>
+            <a href="mass-send.html" class="btn-outline">返回群发列表</a>
+          </header>
+
+          <!-- 快速定位 -->
+          <div class="guide-card" id="quickSection">
+            <h2 class="guide-card-title">🎯 不确定是哪种问题？答 3 个问题帮您定位</h2>
+            <div class="quick-quiz" id="quickQuiz"></div>
+            <div class="quiz-result hidden" id="quizResult"></div>
+          </div>
+
+          <!-- 场景选择 -->
+          <div class="guide-card">
+            <h2 class="guide-card-title">📋 或者直接选择您遇到的情况</h2>
+            <div class="scenario-grid" id="scenarioGrid"></div>
+          </div>
+
+          <!-- 排查详情 -->
+          <div class="guide-card hidden" id="checkSection">
+            <div class="check-section-head">
+              <button type="button" class="btn-text" id="btnBackScenarios">← 返回选择其他情况</button>
+              <h2 class="guide-card-title" id="checkSectionTitle"></h2>
+              <p class="check-section-desc" id="checkSectionDesc"></p>
+            </div>
+            <div class="check-list" id="checkList"></div>
+            <div class="check-summary" id="checkSummary">
+              <h3>💡 小结</h3>
+              <p>请从上到下逐项核对。标有 <span class="level-tag high">优先检查</span> 的项目最常见，建议先看。</p>
+              <p style="margin-top:8px">仍无法解决？请到 <a href="mass-send-stats.html">任务下发情况</a> 查看详细记录，或联系客服并提供任务名称。</p>
+            </div>
+          </div>
+
+          <!-- 常见问题 -->
+          <div class="guide-card">
+            <h2 class="guide-card-title">❓ 常见问题（一句话说明白）</h2>
+            <div class="faq-list" id="faqList"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="js/layout.js"></script>
+  <script src="js/mass-send-guide-data.js"></script>
+  <script src="js/mass-send-guide.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'reach', activeItem: 'mass-send' });</script>
+</body>
+</html>

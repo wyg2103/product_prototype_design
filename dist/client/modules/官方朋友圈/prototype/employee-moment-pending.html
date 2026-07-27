@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>待你发表的 - 客户朋友圈</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/employee-moments.css" />
+  <style>
+    .pending-page { background: #f5f5f5; }
+    .pending-header {
+      background: #fff;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-bottom: 1px solid #f0f0f0;
+      flex-shrink: 0;
+    }
+    .pending-header .back {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #191919;
+      text-decoration: none;
+      font-size: 24px;
+    }
+    .pending-header h1 { font-size: 16px; font-weight: 500; }
+    .pending-list { padding: 12px; }
+    .pending-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+    .pending-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .pending-tip { font-size: 14px; color: #191919; line-height: 1.4; flex: 1; }
+    .pending-btn {
+      flex-shrink: 0;
+      height: 32px;
+      padding: 0 16px;
+      border: none;
+      border-radius: 4px;
+      background: #3d7eff;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .pending-content { font-size: 15px; color: #333; line-height: 1.5; margin-bottom: 12px; }
+    .pending-deadline {
+      font-size: 12px;
+      color: #fa8c16;
+      margin: -4px 0 12px;
+      line-height: 1.4;
+    }
+    .pending-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #b2b2b2;
+    }
+  </style>
+</head>
+<body class="emp-page">
+  <div class="emp-phone pending-page">
+    <div class="emp-status light">
+      <span>9:41</span>
+      <span class="icons">●●● ▮</span>
+    </div>
+    <div class="pending-header">
+      <a class="back" href="employee-moments.html">‹</a>
+      <h1>待你发表的 · <span id="pendingCount">0</span></h1>
+    </div>
+    <div class="emp-scroll">
+      <div class="pending-list" id="pendingList"></div>
+    </div>
+    <div class="emp-toast" id="empToast"></div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/employee-moments.js"></script>
+  <script>
+    AppLayout.mountPerspectiveSwitch('client');
+    EmployeeMoments.initPending();
+  </script>
+</body>
+</html>

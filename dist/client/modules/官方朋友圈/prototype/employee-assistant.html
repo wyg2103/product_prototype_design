@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>企迈企微助手_pro</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/employee-moments.css" />
+</head>
+<body class="emp-page">
+  <div class="emp-phone chat-page">
+    <div class="emp-status light" style="background:#ededed">
+      <span>9:41</span>
+      <span class="icons">●●● ▮</span>
+    </div>
+    <div class="chat-nav">
+      <a class="back" href="employee-messages.html">‹</a>
+      <h1>企迈企微助手_pro</h1>
+      <button type="button" class="more" aria-label="更多">⋯</button>
+    </div>
+
+    <div class="chat-scroll" id="chatScroll"></div>
+
+    <div class="chat-inputbar">
+      <span class="icon-btn" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 14a3 3 0 003-3V6a3 3 0 10-6 0v5a3 3 0 003 3z"/><path d="M19 11a7 7 0 01-14 0M12 18v3"/></svg>
+      </span>
+      <input type="text" placeholder="" readonly />
+      <span class="icon-btn" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+      </span>
+      <span class="icon-btn" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/employee-moments.js"></script>
+  <script>
+    AppLayout.mountPerspectiveSwitch('client');
+    EmployeeMoments.initAssistant();
+  </script>
+</body>
+</html>

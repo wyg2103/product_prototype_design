@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新建客户群发 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/mass-send.css" />
+</head>
+<body class="create-page">
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs mass-page-tabs">
+        <div class="page-tab"><a href="mass-send.html">客户群发</a> <span class="close">×</span></div>
+        <div class="page-tab active">新建群发 <span class="close">×</span></div>
+      </div>
+      <section class="mass-content create-page-content">
+        <div class="mass-scroll create-scroll">
+          <header class="create-page-header">
+            <div>
+              <h1 class="create-title">新建客户群发</h1>
+              <p class="create-subtitle">配置触达范围与消息内容，右侧可实时预览客户侧效果</p>
+            </div>
+          </header>
+
+          <div class="create-tip-banner">
+            <span class="create-tip-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </span>
+            <p>客户群发可由员工发送或按客户分群发送，实现精准营销与有效触达。</p>
+          </div>
+
+          <div class="create-layout">
+            <div class="create-form-col">
+              <!-- 基础信息 -->
+              <div class="form-section create-section">
+                <div class="form-section-head">
+                  <span class="section-badge">1</span>
+                  <h3 class="form-section-title">基础信息</h3>
+                </div>
+
+                <div class="form-row">
+                  <label class="required">群发任务名称</label>
+                  <div class="field">
+                    <div class="input-with-count">
+                      <input type="text" class="form-input" id="taskName" placeholder="请输入群发任务名称" maxlength="20" />
+                      <span class="inline-count"><span id="nameCount">0</span>/20</span>
+                    </div>
+                    <p class="form-hint">用于内部管理，客户不可见</p>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="required">选择群发账号</label>
+                  <div class="field">
+                    <div class="option-cards" data-radio-group="accountType">
+                      <label class="option-card"><input type="radio" name="accountType" value="all" /><span>全部员工</span></label>
+                      <label class="option-card active"><input type="radio" name="accountType" value="指定" checked /><span>指定员工账号</span></label>
+                      <label class="option-card"><input type="radio" name="accountType" value="add" /><span>添加客户</span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>选择员工</label>
+                  <div class="field">
+                    <div class="staff-picker" id="staffPicker">
+                      <button type="button" class="staff-add-btn" id="btnAddStaff">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        添加账号
+                      </button>
+                      <div class="staff-chips" id="staffChips"></div>
+                    </div>
+                    <p class="form-hint">消息将发送给这些员工名下的客户</p>
+                  </div>
+                </div>
+
+                <div class="form-row form-row-top">
+                  <label class="required">选择客户</label>
+                  <div class="field">
+                    <div class="option-cards compact" data-radio-group="customerType">
+                      <label class="option-card"><input type="radio" name="customerType" value="all" /><span>全部客户</span></label>
+                      <label class="option-card active"><input type="radio" name="customerType" value="指定" checked /><span>指定客户</span></label>
+                    </div>
+                    <div class="filter-sub-panel">
+                      <div class="filter-sub-grid">
+                        <div class="sub-field">
+                          <label>所在群聊</label>
+                          <select class="form-input full"><option>请选择群聊</option></select>
+                        </div>
+                        <div class="sub-field">
+                          <label>添加好友时间</label>
+                          <div class="date-range full">
+                            <input type="date" class="form-input" /><span>至</span><input type="date" class="form-input" />
+                          </div>
+                        </div>
+                        <div class="sub-field">
+                          <label>客户标签</label>
+                          <select class="form-input full"><option>满足以下标签之一</option></select>
+                        </div>
+                        <div class="sub-field">
+                          <label>全景标签</label>
+                          <select class="form-input full"><option>请选择标签</option></select>
+                        </div>
+                        <div class="sub-field span-2">
+                          <label>会员客户</label>
+                          <div class="option-cards compact inline-cards">
+                            <label class="option-card active sm"><input type="radio" name="member" checked /><span>不限</span></label>
+                            <label class="option-card sm"><input type="radio" name="member" /><span>会员</span></label>
+                            <label class="option-card sm"><input type="radio" name="member" /><span>非会员</span></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="form-hint warn">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                      若客户归属多名员工，同一客户仅收到一条消息
+                    </p>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>可调整发送范围</label>
+                  <div class="field">
+                    <div class="toggle-row">
+                      <button type="button" class="toggle-switch on" id="toggleRange" aria-label="可调整发送范围"></button>
+                      <span class="toggle-label" id="toggleLabel">已开启，员工可调整发送范围</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>预估触达</label>
+                  <div class="field">
+                    <div class="estimate-box">
+                      <span class="estimate-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                      </span>
+                      <div class="estimate-text">
+                        <span class="estimate-label">当前预估人数</span>
+                        <strong id="estimateCount">128</strong>
+                      </div>
+                      <a href="#" class="estimate-link" id="btnViewEstimate">查看明细</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 编辑消息 -->
+              <div class="form-section create-section">
+                <div class="form-section-head">
+                  <span class="section-badge">2</span>
+                  <h3 class="form-section-title">编辑群发消息</h3>
+                </div>
+
+                <div class="form-row form-row-top">
+                  <label class="required">欢迎语1</label>
+                  <div class="field">
+                    <div class="welcome-toolbar">
+                      <button type="button" class="tool-chip">📁 素材库</button>
+                      <button type="button" class="tool-chip">😊 表情</button>
+                    </div>
+                    <div class="textarea-wrap">
+                      <textarea class="form-textarea" id="welcomeText" placeholder="请输入欢迎语内容，支持换行..." maxlength="600"></textarea>
+                      <button type="button" class="btn-ai">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 7h7l-5.5 4.5 2 7L12 17l-5.5 4.5 2-7L3 9h7z"/></svg>
+                        AI 助手
+                      </button>
+                    </div>
+                    <div class="char-count"><span id="welcomeCount">0</span> / 600</div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>欢迎语2</label>
+                  <div class="field">
+                    <div class="option-cards compact" data-radio-group="welcome2">
+                      <label class="option-card active sm"><input type="radio" name="welcome2" checked /><span>不发送</span></label>
+                      <label class="option-card sm"><input type="radio" name="welcome2" /><span>素材库</span></label>
+                      <label class="option-card sm"><input type="radio" name="welcome2" /><span>雷达</span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>添加附件</label>
+                  <div class="field">
+                    <div class="attach-zone">
+                      <div class="option-cards compact inline-cards">
+                        <label class="option-card sm"><input type="radio" name="attach" /><span>添加附件（最多9个）</span></label>
+                        <label class="option-card active sm"><input type="radio" name="attach" checked /><span>自定义添加</span></label>
+                      </div>
+                      <button type="button" class="attach-drop" id="btnAddAttach">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        点击上传图片 / 链接 / 小程序等附件
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="required">群发时间</label>
+                  <div class="field">
+                    <div class="segment-control" data-radio-group="sendTime">
+                      <label class="segment-item active"><input type="radio" name="sendTime" value="now" checked /><span>立即发送</span></label>
+                      <label class="segment-item"><input type="radio" name="sendTime" value="schedule" /><span>定时发送</span></label>
+                      <label class="segment-item"><input type="radio" name="sendTime" value="period" /><span>周期发送</span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>终止设置</label>
+                  <div class="field">
+                    <div class="option-cards compact inline-cards">
+                      <label class="option-card sm"><input type="radio" name="terminate" /><span>开启</span></label>
+                      <label class="option-card active sm"><input type="radio" name="terminate" checked /><span>关闭</span></label>
+                    </div>
+                    <p class="form-hint">开启后到达终止时间，任务将自动停止</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 预览 -->
+            <aside class="create-preview-col">
+              <div class="preview-panel">
+                <div class="preview-panel-head">
+                  <span class="preview-dot live"></span>
+                  <span>实时预览</span>
+                </div>
+                <div class="preview-phone">
+                  <div class="preview-status-bar">
+                    <span>9:41</span>
+                    <span class="preview-status-icons">▮▮▮ WiFi 🔋</span>
+                  </div>
+                  <div class="preview-nav-bar">客户消息</div>
+                  <div class="preview-phone-body">
+                    <div class="preview-chat-time">今天 09:41</div>
+                    <div class="preview-chat-row">
+                      <div class="preview-avatar">餐</div>
+                      <div class="preview-chat-content">
+                        <div class="preview-sender">餐饮客服</div>
+                        <div class="preview-bubble empty" id="previewBubble">输入欢迎语后在此预览</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="preview-home-bar"><span></span></div>
+                </div>
+                <p class="preview-caption">模拟企业微信客户聊天界面</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="create-footer">
+    <div class="create-footer-inner">
+      <span class="footer-hint">草稿将自动保存，可随时继续编辑</span>
+      <div class="footer-btns">
+        <button type="button" class="btn-outline btn-lg" id="btnSave">保存草稿</button>
+        <button type="button" class="btn-primary btn-lg" id="btnPublish">保存并发布</button>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/mass-send-create.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'reach', activeItem: 'mass-send' });</script>
+</body>
+</html>

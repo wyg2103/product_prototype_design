@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>官方朋友圈 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+
+    <main class="main-area">
+      <div class="page-tabs">
+        <div class="page-tab">企微概览 <span class="close">×</span></div>
+        <div class="page-tab active">官方朋友圈 <span class="close">×</span></div>
+      </div>
+
+      <div class="content-wrapper">
+        <aside class="group-sidebar">
+          <div class="group-sidebar-title">内容分组</div>
+          <a href="#" class="add-group" id="addGroup"><span class="svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>添加分组</a>
+          <ul class="group-tree" id="groupTree"></ul>
+        </aside>
+
+        <section class="content-main">
+          <div class="sub-tabs">
+            <span class="sub-tab active" data-tab="personal">个人发表</span>
+            <span class="sub-tab" data-tab="enterprise">企业发表</span>
+            <span class="sub-tab" data-tab="sync">同步记录</span>
+          </div>
+
+          <div id="contentPanels">
+            <div class="filter-card">
+              <div class="filter-bar">
+                <div class="filter-item">
+                  <label>创建员工</label>
+                  <input type="text" id="filterEmployee" placeholder="请输入员工姓名" />
+                </div>
+                <div class="filter-item">
+                  <label>发布时间</label>
+                  <div class="date-range">
+                    <input type="date" id="dateStart" />
+                    <span>至</span>
+                    <input type="date" id="dateEnd" />
+                  </div>
+                </div>
+                <div class="filter-item">
+                  <label for="filterStatus">状态</label>
+                  <select id="filterStatus">
+                    <option value="">全部状态</option>
+                    <option value="待发布">待发布</option>
+                    <option value="执行中">执行中</option>
+                    <option value="已终止">已终止</option>
+                  </select>
+                </div>
+                <button type="button" class="btn-primary" id="btnSearch">搜索</button>
+                <a href="#" class="link-reset" id="btnReset">清空搜索条件</a>
+              </div>
+            </div>
+
+            <div class="toolbar-section">
+              <div class="action-bar mode-personal">
+                <button type="button" class="btn-primary btn-lg" id="btnPublishTask">发布官方朋友圈任务</button>
+                <button type="button" class="btn-primary btn-lg hidden" id="btnPublishEnterprise">发布官方朋友圈</button>
+                <button type="button" class="btn-outline" id="btnBatchGuide">批量设置为导购任务</button>
+                <button type="button" class="btn-outline" id="btnBatchDelete">批量删除</button>
+                <button type="button" class="btn-outline" id="btnBatchGroup">批量分组</button>
+              </div>
+              <div class="send-tabs">
+                <span class="send-tab active" data-send="immediate">立即发送</span>
+                <span class="send-tab" data-send="scheduled">定时发送</span>
+              </div>
+            </div>
+
+            <div class="panel active" id="panelList">
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead id="tableHead"></thead>
+                  <tbody id="tableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="panelSync">
+            <div class="sync-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#bbbfc4" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span>同步记录列表（原型占位，待补充需求后实现）</span>
+            </div>
+          </div>
+
+          <div class="pagination-bar" id="paginationBar">
+            <span>共 <strong id="totalCount">96</strong> 条</span>
+            <select>
+              <option>10 条/页</option>
+              <option>20 条/页</option>
+              <option>50 条/页</option>
+            </select>
+            <div class="page-btns">
+              <button type="button" disabled>‹</button>
+              <button type="button" class="active" data-page="1">1</button>
+              <button type="button" data-page="2">2</button>
+              <button type="button" data-page="3">3</button>
+              <button type="button" data-page="4">4</button>
+              <button type="button">›</button>
+            </div>
+            <div class="goto-page">
+              前往
+              <input type="number" id="gotoInput" value="1" min="1" />
+              页
+              <button type="button" class="btn-outline" id="gotoBtn" style="height:32px;padding:0 12px">确定</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span id="modalTitle">详情</span>
+        <button type="button" class="modal-close" id="modalClose">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter">
+        <button type="button" class="btn-outline hidden" id="modalCancel">取消</button>
+        <button type="button" class="btn-primary" id="modalOk">知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'moments', activeItem: 'official' });</script>
+</body>
+</html>

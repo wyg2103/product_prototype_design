@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新建引流链接 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/drainage-link.css" />
+</head>
+<body class="page-drainage-create">
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <div class="app-main-column">
+      <!-- Live Preview 顶栏：参照全局预览切换样式 -->
+      <header class="dl-live-preview-bar" id="viewBar">
+        <div class="dl-live-preview-left">
+          <span class="dl-live-badge">LIVE PREVIEW</span>
+          <span class="dl-live-title" id="livePreviewTitle">引流链接 · 新建链接 · B端</span>
+        </div>
+        <div class="dl-state-demo hidden" id="stateDemo">
+          <span class="dl-state-demo-label">演示状态</span>
+          <div class="dl-state-chips">
+              <span class="dl-state-chip active" data-state="location">位置说明</span>
+              <span class="dl-state-chip" data-state="empty">无门店</span>
+              <span class="dl-state-chip" data-state="found">有门店</span>
+            <span class="dl-state-chip" data-state="select">选门店</span>
+            <span class="dl-state-chip" data-state="list">门店列表</span>
+          </div>
+        </div>
+        <div class="dl-live-segment" id="bcToggle">
+          <button type="button" class="dl-live-segment-btn" data-view="c">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            C 端小程序
+          </button>
+          <button type="button" class="dl-live-segment-btn active" data-view="b">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            B 端管理后台
+          </button>
+        </div>
+      </header>
+
+      <main class="main-area">
+        <div class="page-tabs">
+          <div class="page-tab">企微概览 <span class="close">×</span></div>
+          <div class="page-tab"><a href="purchase-license.html">购买接口许可</a> <span class="close">×</span></div>
+          <div class="page-tab"><a href="drainage-link.html" style="color:inherit;text-decoration:none">引流链接</a> <span class="close">×</span></div>
+          <div class="page-tab active" id="pageTabTitle">新建链接 <span class="close">×</span></div>
+        </div>
+
+        <section class="dl-create-content">
+        <div class="dl-create-scroll">
+          <div class="dl-create-layout" id="createLayout">
+            <!-- 左侧效果预览 -->
+            <aside class="dl-preview-col">
+              <div class="dl-preview-panel">
+                <div class="dl-preview-panel-head">效果预览</div>
+
+                <!-- B 端：商家配置 / 推广视角（不含 C 端 H5 交互） -->
+                <div class="dl-preview-view active" id="previewViewB" data-view="b">
+                  <div class="dl-b-preview">
+                    <div class="dl-b-preview-head">
+                      <h4 id="bLinkName">链接名称</h4>
+                      <p id="bLinkMeta">默认分组 · 新建链接</p>
+                    </div>
+                    <div class="dl-b-preview-body">
+                      <div class="dl-b-meta-row">
+                        <label>页面标题</label>
+                        <span id="bPageTitle">扫码进群</span>
+                      </div>
+                      <div class="dl-b-meta-row">
+                        <label>兜底活码</label>
+                        <span id="bFallbackCode">请选择兜底活码</span>
+                      </div>
+                      <div class="dl-b-meta-row">
+                        <label>二维码名称</label>
+                        <span id="bQrName">选择兜底活码</span>
+                      </div>
+                      <div class="dl-b-meta-row">
+                        <label>引导文案</label>
+                        <span id="bGuideText">长按识别二维码入群，海量福利</span>
+                      </div>
+                      <div class="dl-b-meta-row">
+                        <label>推广链接</label>
+                        <span id="bPromoUrl" class="dl-b-url">scrmh5.qmai.cn/l/preview</span>
+                      </div>
+                      <div class="dl-b-promo-qr">
+                        <canvas id="bQrCanvas" width="120" height="120" class="mini-qr"></canvas>
+                        <p>推广二维码（管理端下载 / 投放）</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="dl-preview-caption">B端：链接配置摘要与推广码（商家视角）</p>
+                </div>
+
+                <!-- C 端：用户扫码后的 H5 落地页（完整交互流程） -->
+                <div class="dl-preview-view" id="previewViewC" data-view="c">
+                  <div class="dl-c-phone-wrap">
+                  <div class="dl-c-phone" id="cPhone">
+                    <div class="dl-h5-header">
+                      <span class="dl-h5-close">×</span>
+                      <div class="dl-h5-title">
+                        <div class="main" id="cPageTitle">扫码入群</div>
+                        <div class="sub">scrmh5.qmai.cn</div>
+                      </div>
+                      <span class="dl-h5-more">•••</span>
+                    </div>
+
+                    <div class="dl-c-page-body" id="cPageBody">
+                    <div class="dl-c-hero" id="cHero">
+                      <div class="dl-c-headline">入群享福利</div>
+                      <div class="dl-c-hero-illus">
+                        <div class="dl-gift-scene">
+                          <div class="dl-coin c1"></div>
+                          <div class="dl-coin c2"></div>
+                          <div class="dl-coin c3"></div>
+                          <div class="dl-char left">
+                            <svg viewBox="0 0 36 50" fill="none"><ellipse cx="18" cy="12" rx="10" ry="11" fill="#ffb088"/><rect x="8" y="22" width="20" height="24" rx="4" fill="#ff8c5a"/><rect x="12" y="28" width="12" height="3" rx="1" fill="#fff" opacity="0.5"/></svg>
+                          </div>
+                          <div class="dl-char right">
+                            <svg viewBox="0 0 36 50" fill="none"><ellipse cx="18" cy="12" rx="10" ry="11" fill="#7eb8ff"/><rect x="8" y="22" width="20" height="24" rx="4" fill="#5a9fd4"/><rect x="12" y="28" width="12" height="3" rx="1" fill="#fff" opacity="0.5"/></svg>
+                          </div>
+                          <div class="dl-gift-box">
+                            <svg viewBox="0 0 90 70" fill="none">
+                              <rect x="5" y="28" width="80" height="42" rx="4" fill="#ff6b8a"/>
+                              <rect x="0" y="22" width="90" height="12" rx="2" fill="#ff8fa8"/>
+                              <rect x="38" y="0" width="14" height="70" fill="#fff5e6"/>
+                              <rect x="0" y="24" width="90" height="8" fill="#fff5e6"/>
+                              <circle cx="45" cy="18" r="12" fill="#fff" stroke="#ffd700" stroke-width="2"/>
+                              <path d="M40 18a5 5 0 0110 0" stroke="#8b6914" stroke-width="1.5" fill="none"/>
+                              <rect x="38" y="16" width="14" height="8" rx="2" fill="#ffd700"/>
+                            </svg>
+                          </div>
+                          <div class="dl-gift-pedestal"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="dl-c-card" id="cCard">
+                      <div class="dl-c-card-top">
+                        <button type="button" class="dl-c-relocate" id="btnRelocate">重新定位</button>
+                      </div>
+
+                      <div class="dl-c-manual-link hidden" id="cManualLink">
+                        这不是我附近的门店，<a href="#" id="btnManualSwitch">点此手动切换</a>
+                      </div>
+
+                      <div class="dl-c-loc-explain hidden" id="cLocExplain">
+                        <div class="dl-c-loc-icon">
+                          <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                            <circle cx="24" cy="24" r="22" fill="#eefbf3"/>
+                            <path d="M24 8c-5.5 0-10 4.5-10 10 0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4.5-10-10-10z" fill="#07c160"/>
+                            <circle cx="24" cy="18" r="4" fill="#fff"/>
+                          </svg>
+                        </div>
+                        <h4 class="dl-c-loc-title">获取位置信息说明</h4>
+                        <p class="dl-c-loc-desc">为了向您展示<strong>距离最近</strong>的门店入群二维码，需要获取您当前的位置信息。</p>
+                        <ul class="dl-c-loc-list">
+                          <li>位置信息<strong>仅用于匹配附近门店</strong>以便为您展示合适的社群，不会用于其他用途</li>
+                          <li>您也可以拒绝授权，改用手动选择门店入群</li>
+                        </ul>
+                        <button type="button" class="dl-c-loc-allow-btn" id="locAllow">允许获取位置</button>
+                        <button type="button" class="dl-c-loc-manual-btn" id="locManual">手动选择门店</button>
+                      </div>
+
+                      <div class="dl-c-empty hidden" id="cEmptyState">
+                        <div class="dl-c-empty-icon">
+                          <svg viewBox="0 0 80 80" fill="none">
+                            <rect x="16" y="32" width="48" height="36" rx="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M16 32l24-16 24 16" stroke="currentColor" stroke-width="2"/>
+                            <rect x="32" y="48" width="16" height="20" rx="1" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="52" cy="52" r="14" stroke="currentColor" stroke-width="2"/>
+                            <path d="M58 58l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                          </svg>
+                        </div>
+                        <button type="button" class="dl-c-manual-btn" id="btnManualSelect">选择门店</button>
+                        <p class="dl-c-empty-hint">请选择您要加群的门店</p>
+                      </div>
+
+                      <div class="dl-c-qr-wrap hidden" id="cQrState">
+                        <div class="dl-c-qr-name hidden" id="cQrName">选择兜底活码</div>
+                        <div class="dl-c-qr-box">
+                          <canvas id="cQrCanvas" width="180" height="180"></canvas>
+                          <div class="dl-c-qr-logo">
+                            <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                              <path d="M16 28s-9-5.5-9-12.5a5 5 0 019-3 5 5 0 019 3c0 7-9 12.5-9 12.5z" fill="#07c160"/>
+                              <path d="M11 14v5M16 11v8M21 14v5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+
+                      <p class="dl-c-footer-text" id="cGuideText">长按识别二维码入群，海量福利</p>
+                    </div>
+                    </div>
+
+                    <div class="dl-c-overlay" id="cOverlay">
+                      <div class="dl-c-loc-dialog hidden" id="locDialog">
+                        <div class="dl-c-loc-msg">"智迈科技" 需要获取你的地理位置</div>
+                        <div class="dl-c-loc-actions">
+                          <button type="button" id="locWxAllow">是</button>
+                          <button type="button" id="locWxDeny">否</button>
+                        </div>
+                      </div>
+
+                      <div class="dl-c-store-modal hidden" id="storeModal">
+                        <div class="dl-c-store-modal-head">
+                          <div class="dl-c-store-modal-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/><path d="M9 21V12h6v9"/></svg>
+                          </div>
+                          <h4 class="dl-c-store-modal-title">选择门店</h4>
+                          <p class="dl-c-store-modal-tip">请选择您要加群的门店</p>
+                          <p class="dl-c-store-modal-reason">各门店对应不同社群，选择后将展示该门店入群二维码</p>
+                        </div>
+                        <div class="dl-c-store-fields">
+                          <div class="dl-c-store-row" id="rowCity">
+                            <label>城市</label>
+                            <div class="dl-c-store-row-val">
+                              <span class="val" id="selCityLabel">合肥市</span>
+                              <span class="chevron">▼</span>
+                            </div>
+                          </div>
+                          <div class="dl-c-store-row" id="rowStore">
+                            <label>门店</label>
+                            <div class="dl-c-store-row-val">
+                              <span class="val placeholder" id="selStoreLabel">请选择您要加群的门店</span>
+                              <span class="chevron" id="storeChevron">▼</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="dl-c-store-modal-foot">
+                          <button type="button" class="dl-c-store-confirm-btn" id="btnStoreSearch">确认</button>
+                        </div>
+                      </div>
+
+                      <div class="dl-c-sheet hidden" id="storeSheet">
+                        <div class="dl-c-sheet-handle"></div>
+                        <div class="dl-c-sheet-head">
+                          <h4 class="dl-c-sheet-title">选择门店</h4>
+                          <p class="dl-c-sheet-tip">请选择您要加群的门店</p>
+                        </div>
+                        <div class="dl-c-sheet-search">
+                          <input type="text" id="storeSearchInput" placeholder="搜索门店名称" />
+                          <button type="button" id="btnStoreFilter">搜索</button>
+                        </div>
+                        <div class="dl-c-sheet-list" id="storeSheetList"></div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
+                  <p class="dl-preview-caption" id="cPreviewCaption">C端：用户扫码后 H5 落地页（可点击交互，顶栏可切换演示状态）</p>
+                </div>
+              </div>
+            </aside>
+
+            <!-- 右侧表单 -->
+            <div class="dl-form-col">
+              <div class="dl-form-section">
+                <h3 class="dl-form-section-title">基础信息</h3>
+                <div class="dl-form-row">
+                  <label class="required">链接名称</label>
+                  <div class="field">
+                    <div class="dl-input-wrap">
+                      <input type="text" id="linkName" placeholder="名称不会展示给用户，用于企业记录链接名称" maxlength="20" />
+                      <span class="dl-char-count" id="linkNameCount">0/20</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="dl-form-row">
+                  <label class="required">链接分组</label>
+                  <div class="field">
+                    <select id="linkGroup">
+                      <option value="none">未分组</option>
+                      <option value="default" selected>默认分组</option>
+                      <option value="glbs">LBS引流入群</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="dl-form-row">
+                  <label>是否使用官方活码</label>
+                  <div class="field">
+                    <div class="dl-radio-group">
+                      <label><input type="radio" name="official" value="no" checked /> 否</label>
+                      <label><input type="radio" name="official" value="yes" /> 是</label>
+                    </div>
+                    <p class="dl-form-note">因官方调整，2024年9月后授权商户需使用官方活码，否则无法正常展示群二维码。</p>
+                  </div>
+                </div>
+                <div class="dl-form-row">
+                  <label class="required">选择兜底活码</label>
+                  <div class="field">
+                    <select id="fallbackCode">
+                      <option value="">请选择兜底活码</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="dl-form-row">
+                  <label>备注</label>
+                  <div class="field">
+                    <div class="dl-input-wrap">
+                      <input type="text" id="linkRemark" placeholder="请输入备注" maxlength="20" />
+                      <span class="dl-char-count" id="linkRemarkCount">0/20</span>
+                    </div>
+                    <p class="dl-form-hint">备注仅用于企业内部管理，不会展示给用户</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dl-form-section">
+                <h3 class="dl-form-section-title">页面样式设计</h3>
+                <div class="dl-form-row">
+                  <label>页面标题</label>
+                  <div class="field">
+                    <div class="dl-input-wrap">
+                      <input type="text" id="pageTitle" value="扫码进群" maxlength="10" />
+                      <span class="dl-char-count" id="pageTitleCount">4/10</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="dl-form-row">
+                  <label>二维码名称</label>
+                  <div class="field">
+                    <div class="dl-radio-group">
+                      <label><input type="radio" name="qrNameType" value="default" /> 默认二维码名称</label>
+                      <label><input type="radio" name="qrNameType" value="custom" checked /> 自定义二维码名称</label>
+                    </div>
+                    <div class="dl-input-wrap dl-qr-name-input" id="qrNameWrap">
+                      <input type="text" id="qrName" placeholder="请输入二维码名称" maxlength="20" />
+                      <span class="dl-char-count" id="qrNameCount">0/20</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="dl-form-row">
+                  <label>页面样式</label>
+                  <div class="field">
+                    <div class="dl-radio-group">
+                      <label><input type="radio" name="pageStyle" value="default" /> 默认</label>
+                      <label><input type="radio" name="pageStyle" value="custom" checked /> 自定义样式</label>
+                    </div>
+                    <div class="dl-style-custom" id="styleCustomWrap">
+                      <div class="dl-form-sub-row">
+                        <label>背景图片</label>
+                        <div class="field">
+                          <div class="dl-upload-box" id="bgUpload">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            <span>添加图片</span>
+                          </div>
+                          <input type="file" id="bgFileInput" accept="image/*" hidden />
+                          <p class="dl-form-hint">建议尺寸 750 × 1449 px，大小不超过 1MB；白色二维码模块宽度 787px，居中展示</p>
+                        </div>
+                      </div>
+                      <div class="dl-form-sub-row">
+                        <label>引导文案</label>
+                        <div class="field">
+                          <div class="dl-input-wrap">
+                            <input type="text" id="guideText" placeholder="请输入引导文案" maxlength="15" />
+                            <span class="dl-char-count" id="guideTextCount">0/15</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dl-form-sub-row">
+                        <label>按钮背景色</label>
+                        <div class="field">
+                          <div class="dl-color-picker">
+                            <input type="color" id="locBtnBgColor" value="#07c160" />
+                            <input type="text" id="locBtnBgColorHex" value="#07C160" maxlength="7" placeholder="#07C160" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dl-form-sub-row">
+                        <label>字体颜色</label>
+                        <div class="field">
+                          <div class="dl-color-picker">
+                            <input type="color" id="locBtnTextColor" value="#ffffff" />
+                            <input type="text" id="locBtnTextColorHex" value="#FFFFFF" maxlength="7" placeholder="#FFFFFF" />
+                          </div>
+                          <p class="dl-form-hint">用于设置请求授权用户地理位置页面中按钮的背景色和字体颜色，<button type="button" class="dl-text-link" id="btnViewLocExample">查看示例</button></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dl-form-actions">
+                <button type="button" class="btn-primary btn-lg" id="btnSave">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal-overlay" id="locAuthExampleModal">
+    <div class="modal dl-loc-example-modal">
+      <div class="modal-header">
+        <span>授权地理位置页面示例</span>
+        <button type="button" class="modal-close" id="locAuthExampleClose" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="dl-loc-example-phone-wrap">
+          <div class="dl-c-phone dl-loc-example-phone">
+            <div class="dl-h5-header">
+              <span class="dl-h5-close">×</span>
+              <div class="dl-h5-title">
+                <div class="main">扫码入群</div>
+                <div class="sub">scrmh5.qmai.cn</div>
+              </div>
+              <span class="dl-h5-more">•••</span>
+            </div>
+            <div class="dl-c-page-body">
+              <div class="dl-c-hero dl-loc-example-hero">
+                <div class="dl-c-headline">入群享福利</div>
+              </div>
+              <div class="dl-c-card">
+                <div class="dl-c-loc-explain">
+                  <div class="dl-c-loc-icon">
+                    <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                      <circle cx="24" cy="24" r="22" fill="#eefbf3"/>
+                      <path d="M24 8c-5.5 0-10 4.5-10 10 0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4.5-10-10-10z" fill="#07c160"/>
+                      <circle cx="24" cy="18" r="4" fill="#fff"/>
+                    </svg>
+                  </div>
+                  <h4 class="dl-c-loc-title">获取位置信息说明</h4>
+                  <p class="dl-c-loc-desc">为了向您展示<strong>距离最近</strong>的门店入群二维码，需要获取您当前的位置信息。</p>
+                  <ul class="dl-c-loc-list">
+                    <li>位置信息<strong>仅用于匹配附近门店</strong>以便为您展示合适的社群，不会用于其他用途</li>
+                    <li>您也可以拒绝授权，改用手动选择门店入群</li>
+                  </ul>
+                  <button type="button" class="dl-c-loc-allow-btn" id="exampleLocAllow">允许获取位置</button>
+                  <button type="button" class="dl-c-loc-manual-btn">手动选择门店</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="dl-loc-example-caption">C 端：用户扫码后请求授权地理位置的页面样式预览</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/drainage-link-data.js"></script>
+  <script src="js/drainage-link-loc-btn-style.js"></script>
+  <script src="js/drainage-link-create.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'growth', activeItem: 'drainage-link' });</script>
+</body>
+</html>

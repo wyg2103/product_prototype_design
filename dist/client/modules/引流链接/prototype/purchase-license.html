@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>购买接口许可 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/mass-send.css" />
+  <link rel="stylesheet" href="css/purchase-license.css" />
+</head>
+<body class="pl-page">
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs">
+        <div class="page-tab"><a href="#">企微概览</a> <span class="close">×</span></div>
+        <div class="page-tab active">购买接口许可 <span class="close">×</span></div>
+      </div>
+
+      <section class="pl-content">
+        <div class="pl-scroll">
+          <nav class="pl-sub-tabs" id="plSubTabs">
+            <button type="button" class="pl-sub-tab" data-panel="account">账号信息</button>
+            <button type="button" class="pl-sub-tab active" data-panel="employee">员工信息</button>
+            <button type="button" class="pl-sub-tab" data-panel="order">订单记录</button>
+          </nav>
+
+          <!-- 账号信息 -->
+          <div class="pl-panel" id="panelAccount">
+            <div class="pl-account-cards" id="accountCards"></div>
+            <p class="pl-auto-tip" style="margin-top:8px">接口许可到期后将影响员工使用企业微信相关能力，请及时续费。</p>
+          </div>
+
+          <!-- 员工信息 -->
+          <div class="pl-panel active" id="panelEmployee">
+            <div class="pl-auto-row">
+              <span class="pl-auto-label">自动分配</span>
+              <button type="button" class="toggle-switch" id="toggleAutoAssign" aria-label="自动分配"></button>
+              <span class="pl-auto-tip" id="autoAssignTip"></span>
+            </div>
+
+            <div class="pl-filter-card">
+              <div class="pl-filter-row">
+                <div class="filter-item">
+                  <label>姓名</label>
+                  <input type="text" id="filterName" placeholder="请输入姓名" />
+                </div>
+                <div class="filter-item">
+                  <label>部门</label>
+                  <select id="filterDept">
+                    <option value="">请选择</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>是否开通基础账号</label>
+                  <select id="filterBasic">
+                    <option value="">请选择</option>
+                    <option value="yes">已开通</option>
+                    <option value="no">未开通</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label>是否开通互通账号</label>
+                  <select id="filterExternal">
+                    <option value="">请选择</option>
+                    <option value="yes">已开通</option>
+                    <option value="no">未开通</option>
+                  </select>
+                </div>
+                <button type="button" class="btn-primary" id="btnSearch">查询</button>
+                <a href="#" class="link-reset" id="btnReset">重置</a>
+              </div>
+            </div>
+
+            <div class="pl-toolbar">
+              <div class="pl-toolbar-left">
+                <span class="pl-batch-label">批量</span>
+                <button type="button" class="btn-outline" id="btnBatchBasic">开通基础账号</button>
+                <button type="button" class="btn-outline" id="btnBatchExternal">开通互通账号</button>
+                <button type="button" class="btn-outline" id="btnBatchAssign">批量分配账号</button>
+              </div>
+              <button type="button" class="btn-outline" id="btnExport">导出</button>
+            </div>
+
+            <div class="pl-table-wrap">
+              <div class="table-wrap" style="border:none;border-radius:0">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th class="col-check"><input type="checkbox" id="checkAll" aria-label="全选" /></th>
+                      <th class="col-name">姓名</th>
+                      <th class="col-phone">手机号</th>
+                      <th class="col-wechat">微信账号</th>
+                      <th class="col-dept">部门</th>
+                      <th class="col-type">账号类型</th>
+                      <th class="col-toggle">是否开通</th>
+                      <th>接口许可密钥</th>
+                      <th class="col-time">创建时间</th>
+                      <th class="col-time">激活时间</th>
+                      <th class="col-time">失效时间</th>
+                    </tr>
+                  </thead>
+                  <tbody id="empTableBody"></tbody>
+                </table>
+              </div>
+              <p class="pl-empty hidden" id="empEmpty">暂无符合条件的员工</p>
+            </div>
+
+            <div class="pagination-bar" style="margin-top:12px">
+              <span>共 <strong id="tableTotal">0</strong> 条</span>
+              <select id="pageSizeSelect">
+                <option value="10" selected>10 条/页</option>
+                <option value="20">20 条/页</option>
+                <option value="50">50 条/页</option>
+              </select>
+              <div class="page-btns" id="pageBtns"></div>
+            </div>
+          </div>
+
+          <!-- 订单记录 -->
+          <div class="pl-panel" id="panelOrder">
+            <div class="pl-table-wrap pl-order-table">
+              <div class="table-wrap" style="border:none;border-radius:0">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>订单号</th>
+                      <th>账号类型</th>
+                      <th>购买数量</th>
+                      <th>金额（元）</th>
+                      <th>状态</th>
+                      <th>支付时间</th>
+                      <th>到期时间</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orderTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header"><span id="modalTitle">提示</span><button type="button" class="modal-close" id="modalClose">×</button></div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer"><button type="button" class="btn-primary" id="modalOk">知道了</button></div>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/purchase-license-data.js"></script>
+  <script src="js/purchase-license.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'enterprise', activeItem: 'purchase-license' });</script>
+</body>
+</html>

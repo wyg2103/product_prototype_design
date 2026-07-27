@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>发布官方朋友圈任务 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/mass-send.css" />
+  <link rel="stylesheet" href="css/moment-create.css" />
+</head>
+<body class="create-page">
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs mass-page-tabs">
+        <div class="page-tab"><a href="index.html">官方朋友圈</a> <span class="close">×</span></div>
+        <div class="page-tab active" id="createPageTab">发布官方朋友圈任务 <span class="close">×</span></div>
+      </div>
+      <section class="mass-content create-page-content">
+        <div class="mass-scroll create-scroll">
+          <div class="create-tip-banner">
+            <span class="create-tip-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </span>
+            <p>总部统一编辑素材内容并下发任务，员工收到任务后可一键发表至个人官方朋友圈，实现品牌内容统一触达。</p>
+          </div>
+
+          <div class="create-layout moment-create-layout">
+            <div class="create-form-col">
+              <!-- 基础信息 -->
+              <div class="form-section create-section">
+                <div class="form-section-head">
+                  <span class="section-badge">1</span>
+                  <h3 class="form-section-title">基础信息</h3>
+                </div>
+
+                <div class="form-row">
+                  <label class="required">任务标题</label>
+                  <div class="field">
+                    <div class="input-with-count">
+                      <input type="text" class="form-input" id="taskTitle" placeholder="请输入任务标题" maxlength="32" />
+                      <span class="inline-count"><span id="titleCount">0</span>/32</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="required">选择员工</label>
+                  <div class="field">
+                    <div class="staff-picker" id="staffPicker">
+                      <button type="button" class="staff-add-btn" id="btnAddStaff">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        添加成员
+                      </button>
+                      <div class="staff-chips" id="staffChips"></div>
+                    </div>
+                    <p class="form-hint">选择需要发表该朋友圈的员工，可多选</p>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>选择分组</label>
+                  <div class="field">
+                    <select class="form-input" id="groupSelect" style="max-width: 280px; width: 100%;">
+                      <option value="default">默认分组</option>
+                      <option value="holiday">节日运营</option>
+                      <option value="daily">日常运营</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label class="required">朋友圈类型</label>
+                  <div class="field">
+                    <div class="moment-radio-group" data-radio-group="momentType">
+                      <label class="moment-radio">
+                        <input type="radio" name="momentType" value="text" />
+                        <span class="radio-dot"></span>
+                        <span>文本</span>
+                      </label>
+                      <label class="moment-radio">
+                        <input type="radio" name="momentType" value="image" checked />
+                        <span class="radio-dot"></span>
+                        <span>文本/图片</span>
+                      </label>
+                      <label class="moment-radio">
+                        <input type="radio" name="momentType" value="link" />
+                        <span class="radio-dot"></span>
+                        <span>文本/链接</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row form-row-top">
+                  <label class="required">朋友圈内容</label>
+                  <div class="field">
+                    <div class="welcome-toolbar">
+                      <button type="button" class="tool-chip" id="btnMaterialText">素材库选择</button>
+                      <button type="button" class="tool-chip" id="btnEmoji">添加表情</button>
+                    </div>
+                    <div class="textarea-wrap">
+                      <textarea class="form-textarea" id="momentContent" placeholder="请输入回复内容" maxlength="500"></textarea>
+                    </div>
+                    <div class="char-count"><span id="contentCount">0</span>/500</div>
+
+                    <!-- 文本/图片 -->
+                    <div class="moment-type-panel" id="panelImage">
+                      <div class="moment-radio-group image-source-group" data-radio-group="imageSource">
+                        <label class="moment-radio">
+                          <input type="radio" name="imageSource" value="custom" checked />
+                          <span class="radio-dot"></span>
+                          <span>自定义图片</span>
+                        </label>
+                        <label class="moment-radio">
+                          <input type="radio" name="imageSource" value="library" />
+                          <span class="radio-dot"></span>
+                          <span>选择素材库</span>
+                        </label>
+                      </div>
+
+                      <div id="customImageArea">
+                        <div class="moment-nine-grid" id="imageGrid" aria-label="朋友圈图片九宫格，可拖拽调整顺序"></div>
+                        <input type="file" id="imageInput" accept="image/*" multiple hidden />
+                        <p class="form-hint">
+                          自定义图片不能超过 9 张，建议大小不超过 10MB。建议普通图片分辨率 1080×1080，长图分辨率 1080×1440。选中图片后可拖拽调整顺序。
+                        </p>
+                      </div>
+
+                      <div id="libraryImageArea" class="hidden">
+                        <button type="button" class="staff-add-btn" id="btnPickLibrary">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                          从素材库选择
+                        </button>
+                        <p class="form-hint">从企业素材库中选择已上传的图片素材</p>
+                      </div>
+                    </div>
+
+                    <!-- 文本/链接 -->
+                    <div class="moment-type-panel hidden" id="panelLink">
+                      <div class="link-fields">
+                        <div class="sub-field">
+                          <label>链接标题</label>
+                          <input type="text" class="form-input full" id="linkTitle" placeholder="请输入链接标题" maxlength="64" />
+                        </div>
+                        <div class="sub-field">
+                          <label>链接地址</label>
+                          <input type="url" class="form-input full" id="linkUrl" placeholder="请输入 https:// 开头的链接" />
+                        </div>
+                        <div class="sub-field">
+                          <label>链接封面</label>
+                          <button type="button" class="moment-upload-slot sm" id="btnLinkCover">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 高级设置 -->
+              <div class="form-section create-section">
+                <div class="form-section-head">
+                  <span class="section-badge">2</span>
+                  <h3 class="form-section-title">高级设置</h3>
+                </div>
+
+                <div class="form-row">
+                  <label class="required">发布方式</label>
+                  <div class="field">
+                    <div class="moment-radio-group" data-radio-group="publishMode">
+                      <label class="moment-radio">
+                        <input type="radio" name="publishMode" value="now" checked />
+                        <span class="radio-dot"></span>
+                        <span>立即发送</span>
+                      </label>
+                      <label class="moment-radio">
+                        <input type="radio" name="publishMode" value="schedule" />
+                        <span class="radio-dot"></span>
+                        <span>定时发送</span>
+                      </label>
+                    </div>
+                    <div class="schedule-time-wrap hidden" id="scheduleTimeWrap">
+                      <input type="datetime-local" class="form-input" id="scheduleTime" step="1" />
+                      <p class="form-hint">到达设定时间后自动下发任务给员工</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row form-row-top">
+                  <label>任务提醒</label>
+                  <div class="field">
+                    <div class="moment-radio-group" data-radio-group="taskRemind">
+                      <label class="moment-radio">
+                        <input type="radio" name="taskRemind" value="default" checked />
+                        <span class="radio-dot"></span>
+                        <span>默认提醒</span>
+                      </label>
+                      <label class="moment-radio">
+                        <input type="radio" name="taskRemind" value="none" />
+                        <span class="radio-dot"></span>
+                        <span>不提醒</span>
+                      </label>
+                    </div>
+                    <div class="remind-template-box" id="remindTemplateBox">
+                      <div class="remind-template-text" id="remindTemplateText">您收到一条新的官方朋友圈任务：#{任务名称}#，请前往「工作台-官方朋友圈」中查看并执行。</div>
+                      <div class="char-count"><span id="remindCount">82</span>/500</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label>任务终止时间</label>
+                  <div class="field">
+                    <input type="datetime-local" class="form-input terminate-time-input" id="terminateTime" step="1" />
+                    <p class="form-hint terminate-hint">
+                      <strong>用途说明：</strong>设置任务终止时间后，收到该朋友圈任务的员工若未在终止时间前完成执行操作，到期后系统将自动终止任务（企业发表对应调用企微「停止发表企业朋友圈」接口），未执行员工不可再发表、不可补发。不设置则长期有效，直至员工执行或管理员手动结束。<br />
+                      <strong>注意：</strong>已成功发表到客户朋友圈的内容不受影响，已发表不可撤回。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="create-footer">
+    <div class="create-footer-inner">
+      <span class="footer-hint">发布后内容将出现在员工的朋友圈任务中</span>
+      <div class="footer-btns">
+        <button type="button" class="btn-outline btn-lg" id="btnCancel">取消</button>
+        <button type="button" class="btn-outline btn-lg" id="btnSave">保存</button>
+        <button type="button" class="btn-primary btn-lg" id="btnPublish">保存并发布</button>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/moment-create.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'moments', activeItem: 'official' });</script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+/* 发布官方朋友圈任务 */
+
+.moment-create-layout {
+  max-width: 960px;
+}
+
+/* 原生风格单选 */
+.moment-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  min-height: 38px;
+}
+.moment-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  user-select: none;
+}
+.moment-radio input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.moment-radio .radio-dot {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #c0c4cc;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  transition: all var(--transition);
+  background: #fff;
+}
+.moment-radio .radio-dot::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform var(--transition);
+}
+.moment-radio:hover .radio-dot {
+  border-color: var(--primary);
+}
+.moment-radio:has(input:checked) .radio-dot {
+  border-color: var(--primary);
+}
+.moment-radio:has(input:checked) .radio-dot::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+.moment-radio:has(input:checked) {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.image-source-group {
+  margin: 12px 0 14px;
+}
+
+.moment-type-panel {
+  margin-top: 4px;
+}
+
+/* 基础表单控件补全 */
+.moment-create-layout .form-input,
+.moment-create-layout .form-textarea,
+.moment-create-layout select.form-input {
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  font-size: 13px;
+  color: var(--text);
+  background: #fff;
+  font-family: inherit;
+}
+.moment-create-layout .form-textarea {
+  max-width: none;
+  padding: 12px 14px;
+  min-height: 120px;
+}
+.moment-create-layout .form-input.full {
+  max-width: none;
+}
+.moment-create-layout .terminate-time-input,
+.moment-create-layout #scheduleTime {
+  max-width: 280px;
+}
+
+/* 九宫格图片 */
+.moment-nine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 96px);
+  gap: 8px;
+  width: fit-content;
+  margin-top: 4px;
+}
+
+.moment-upload-slot {
+  width: 96px;
+  height: 96px;
+  border: 1px dashed #d0d3d9;
+  border-radius: 4px;
+  background: #fafbfc;
+  color: #c0c4cc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  padding: 0;
+}
+.moment-upload-slot svg {
+  width: 28px;
+  height: 28px;
+}
+.moment-upload-slot:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
+}
+.moment-upload-slot.sm {
+  width: 80px;
+  height: 80px;
+}
+.moment-upload-slot.sm svg {
+  width: 24px;
+  height: 24px;
+}
+
+.moment-grid-item {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #f0f1f5;
+  cursor: grab;
+  border: 1px solid var(--border-light);
+  user-select: none;
+  touch-action: none;
+}
+.moment-grid-item:active {
+  cursor: grabbing;
+}
+.moment-grid-item.dragging {
+  opacity: 0.45;
+  cursor: grabbing;
+}
+.moment-grid-item.drag-over {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.moment-grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  display: block;
+}
+.moment-grid-item .grid-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition);
+  padding: 0;
+}
+.moment-grid-item:hover .grid-remove {
+  opacity: 1;
+}
+.moment-grid-item .grid-remove:hover {
+  background: rgba(245, 74, 69, 0.9);
+}
+.moment-grid-item .grid-index {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.moment-grid-item.drag-ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 96px;
+  height: 96px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(31, 35, 41, 0.2);
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+/* 链接字段 */
+.link-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+  max-width: 520px;
+}
+.link-fields .sub-field label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+/* 提醒文案 */
+.remind-template-box {
+  margin-top: 12px;
+  max-width: 560px;
+  background: #f5f6f8;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.remind-template-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  word-break: break-all;
+}
+.remind-template-box .char-count {
+  margin-top: 8px;
+}
+
+.schedule-time-wrap {
+  margin-top: 12px;
+}
+
+/* 终止时间用途说明 */
+.terminate-hint {
+  margin-top: 10px;
+  max-width: 560px;
+  padding: 10px 12px;
+  background: #f7f8fa;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--primary);
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+.terminate-hint strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .moment-nine-grid {
+    grid-template-columns: repeat(3, 80px);
+    gap: 6px;
+  }
+  .moment-grid-item,
+  .moment-upload-slot {
+    width: 80px;
+    height: 80px;
+  }
+}

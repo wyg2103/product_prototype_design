@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>客户朋友圈 - 企微客户端</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/employee-moments.css" />
+</head>
+<body class="emp-page">
+  <div class="emp-phone">
+    <div class="emp-status dark">
+      <span>9:41</span>
+      <span class="icons">●●● ▮</span>
+    </div>
+
+    <div class="cm-header">
+      <div class="cm-nav">
+        <a href="employee-messages.html">‹</a>
+        <button type="button" aria-label="更多">⋯</button>
+      </div>
+      <div class="cm-hero">
+        <div class="cm-lens"></div>
+        <div class="cm-hero-text">
+          可将产品介绍、活动信息等发表到客户的朋友圈<br />
+          客户还可在你的个人信息页查看
+        </div>
+        <a href="#" class="cm-hero-link">设置企业品牌图和标语等 ▾</a>
+      </div>
+      <div class="cm-cover" aria-hidden="true"></div>
+    </div>
+
+    <div class="emp-scroll" style="background:#fff">
+      <div class="cm-pending-bar" id="pendingBar" hidden>
+        <svg class="horn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 11v2a1 1 0 001 1h2l5 4V6L6 10H4a1 1 0 00-1 1z"/>
+          <path d="M16 8a5 5 0 010 8M18.5 5.5a9 9 0 010 13"/>
+        </svg>
+        <div class="txt" id="pendingText">有0条内容待你发表</div>
+        <a class="go" href="employee-moment-pending.html">去发表</a>
+      </div>
+
+      <div class="cm-timeline" id="timelineRoot"></div>
+    </div>
+
+    <div class="cm-tabbar">
+      <a class="cm-tab active" href="employee-moments.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+        我发表的
+      </a>
+      <a class="cm-tab" href="#" data-panel="stats">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21.2 15a9 9 0 11-5-11"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
+        统计
+      </a>
+      <a class="cm-tab" href="#" data-panel="config">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M2 14h4M10 8h4M18 16h4"/></svg>
+        配置
+      </a>
+    </div>
+    <div class="emp-toast" id="empToast"></div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/employee-moments.js"></script>
+  <script>
+    AppLayout.mountPerspectiveSwitch('client');
+    EmployeeMoments.initHome();
+  </script>
+</body>
+</html>

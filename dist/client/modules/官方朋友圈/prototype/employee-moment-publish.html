@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>发表朋友圈</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/employee-moments.css" />
+</head>
+<body class="emp-page">
+  <div class="emp-phone publish-page">
+    <div class="emp-status light">
+      <span>9:41</span>
+      <span class="icons">●●● ▮</span>
+    </div>
+    <div class="publish-nav">
+      <a class="back" href="employee-task-list.html" id="backLink">‹</a>
+      <button type="button" class="sim-stop" id="btnSimStop" hidden>模拟终止</button>
+    </div>
+    <div class="publish-body" id="publishBody"></div>
+    <div class="publish-bottom" id="publishBottom">
+      <button type="button" class="publish-btn" id="btnPublish">发表</button>
+    </div>
+
+    <div class="emp-mask" id="blockMask"></div>
+    <div class="emp-dialog" id="blockDialog">
+      <div class="emp-dialog-body">
+        <div class="block-icon">!</div>
+        <div class="emp-dialog-title" id="blockTitle">任务已终止</div>
+        <div class="emp-dialog-desc" id="blockDesc"></div>
+      </div>
+      <div class="emp-dialog-actions single">
+        <button type="button" class="ok" id="blockOk">返回任务列表</button>
+      </div>
+    </div>
+    <div class="emp-toast" id="empToast"></div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/employee-moments.js"></script>
+  <script>
+    AppLayout.mountPerspectiveSwitch('client');
+    EmployeeMoments.initPublish();
+  </script>
+</body>
+</html>

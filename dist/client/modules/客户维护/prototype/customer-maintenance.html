@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>客户维护分析 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/mass-send.css" />
+  <link rel="stylesheet" href="css/customer-maintenance.css" />
+</head>
+<body class="cm-page">
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs mass-page-tabs">
+        <div class="page-tab active">客户维护分析 <span class="close">×</span></div>
+      </div>
+      <section class="cm-content">
+        <div class="cm-scroll">
+          <div class="cm-intro">
+            <p id="cmIntro"></p>
+            <span class="cm-update">更新于 <span id="cmUpdateTime">—</span></span>
+          </div>
+
+          <div class="cm-filter-card">
+            <div class="cm-filter-grid">
+              <div class="filter-item">
+                <label>统计日期</label>
+                <div class="date-range">
+                  <input type="date" id="filterStart" value="2026-06-01" />
+                  <span>至</span>
+                  <input type="date" id="filterEnd" value="2026-06-07" />
+                </div>
+              </div>
+              <div class="filter-item">
+                <label>部门</label>
+                <select id="filterDept" class="form-input" style="max-width:none">
+                  <option value="">全部部门</option>
+                  <option>安徽省</option>
+                  <option>华南二区</option>
+                  <option>华东区</option>
+                  <option>华北区</option>
+                  <option>运营部</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label>员工姓名</label>
+                <input type="text" id="filterName" placeholder="请输入员工姓名" class="form-input" style="max-width:none" />
+              </div>
+              <div class="filter-item">
+                <label>排序</label>
+                <select id="filterSort" class="form-input" style="max-width:none">
+                  <option value="newContactCnt">按新增客户</option>
+                  <option value="chatCnt">按聊天客户数</option>
+                  <option value="messageCnt">按发出消息数</option>
+                  <option value="replyPercentage">按咨询回复率</option>
+                  <option value="avgReplyTime">按平均回复时长</option>
+                  <option value="negativeFeedbackCnt">按被删/拉黑</option>
+                </select>
+              </div>
+            </div>
+            <div class="cm-filter-actions">
+              <button type="button" class="btn-primary" id="btnQuery">查询</button>
+              <button type="button" class="btn-outline" id="btnReset">重置</button>
+            </div>
+          </div>
+
+          <div class="cm-toolbar">
+            <div class="mass-toolbar-left">
+              <button type="button" class="btn-outline" id="btnRefresh">刷新数据</button>
+              <button type="button" class="btn-outline" id="btnExport">导出报表</button>
+              <a href="#" class="mass-help-link" id="btnHelp">指标说明</a>
+            </div>
+          </div>
+
+          <div class="cm-summary" id="summaryCards"></div>
+
+          <div class="cm-chart-section">
+            <div class="cm-chart-head">
+              <h3>趋势概览</h3>
+              <div class="cm-chart-tabs" id="chartTabs">
+                <span class="cm-chart-tab active" data-metric="newContactCnt">新增客户</span>
+                <span class="cm-chart-tab" data-metric="chatCnt">聊天客户数</span>
+                <span class="cm-chart-tab" data-metric="messageCnt">发出消息数</span>
+                <span class="cm-chart-tab" data-metric="replyPercentage">咨询回复率</span>
+              </div>
+            </div>
+            <canvas class="cm-chart-canvas" id="trendChart"></canvas>
+          </div>
+
+          <div class="cm-section cm-table">
+            <div class="cm-section-head">
+              <h3>员工维护明细</h3>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:13px;color:var(--text-secondary)">共 <strong id="empTotal">0</strong> 人</span>
+                <button type="button" class="btn-outline" id="btnExportEmp">导出</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>员工</th>
+                    <th>部门</th>
+                    <th>主动加好友</th>
+                    <th>新增客户</th>
+                    <th>聊天客户数</th>
+                    <th>发出消息数</th>
+                    <th>咨询回复率</th>
+                    <th>平均回复时长</th>
+                    <th>被删/拉黑</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="empTableBody"></tbody>
+              </table>
+            </div>
+            <div class="pagination-bar">
+              <span>共 <strong id="tableTotal">0</strong> 条</span>
+              <select id="pageSizeSelect">
+                <option value="10" selected>10 条/页</option>
+                <option value="20">20 条/页</option>
+                <option value="50">50 条/页</option>
+              </select>
+              <div class="page-btns" id="pageBtns"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal modal-wide" onclick="event.stopPropagation()">
+      <div class="modal-header"><span id="modalTitle">提示</span><button type="button" class="modal-close" id="modalClose">×</button></div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer"><button type="button" class="btn-primary" id="modalOk">知道了</button></div>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/customer-maintenance-data.js"></script>
+  <script src="js/customer-maintenance.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'customer', activeItem: 'customer-maintenance' });</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>组件库 · 批量导入 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/component-library.css" />
+</head>
+<body>
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs">
+        <div class="page-tab"><a href="../../官方朋友圈/prototype/index.html">官方朋友圈</a> <span class="close">×</span></div>
+        <div class="page-tab active">组件库 <span class="close">×</span></div>
+      </div>
+
+      <section class="cl-content">
+        <div class="cl-scroll">
+          <div class="cl-page-head">
+            <div>
+              <h1 class="cl-title">组件库</h1>
+              <p class="cl-desc">可复用的业务组件原型，点击预览交互效果。</p>
+            </div>
+          </div>
+
+          <div class="cl-card">
+            <div class="cl-card-head">
+              <div>
+                <h2>批量调整导入</h2>
+                <p>三步导入流程：上传文件 → 数据校验/导入 → 完成导入。支持错误高亮、仅显示错误数据、行内修改与删除。</p>
+              </div>
+              <button type="button" class="btn-primary" id="btnOpenBatchImport">打开组件</button>
+            </div>
+            <div class="cl-preview-strip">
+              <span class="cl-chip">上传文件</span>
+              <span class="cl-chip">数据导入</span>
+              <span class="cl-chip">完成导入</span>
+              <span class="cl-chip muted">模板下载</span>
+              <span class="cl-chip muted">拖拽上传</span>
+              <span class="cl-chip muted">错误校验</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 批量调整导入弹窗 -->
+  <div class="bi-overlay" id="batchImportModal" aria-hidden="true">
+    <div class="bi-modal" role="dialog" aria-labelledby="biTitle">
+      <div class="bi-header">
+        <h3 id="biTitle">批量调整导入</h3>
+        <button type="button" class="bi-close" id="biClose" aria-label="关闭">×</button>
+      </div>
+
+      <div class="bi-stepper" id="biStepper">
+        <div class="bi-step active" data-step="1">
+          <span class="bi-step-dot">1</span>
+          <span class="bi-step-label">上传文件</span>
+        </div>
+        <div class="bi-step-line"></div>
+        <div class="bi-step" data-step="2">
+          <span class="bi-step-dot">2</span>
+          <span class="bi-step-label">数据导入</span>
+        </div>
+        <div class="bi-step-line"></div>
+        <div class="bi-step" data-step="3">
+          <span class="bi-step-dot">3</span>
+          <span class="bi-step-label">完成导入</span>
+        </div>
+      </div>
+
+      <div class="bi-body">
+        <!-- Step 1 -->
+        <div class="bi-panel active" id="biStep1">
+          <div class="bi-upload-box">
+            <div class="bi-upload-tip">
+              <span>按照表格上方提示录入待导入的信息</span>
+              <a href="#" id="biDownloadTpl">下载模板</a>
+            </div>
+            <div class="bi-dropzone" id="biDropzone">
+              <div class="bi-upload-icon">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M24 32V14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M17 20l7-7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 34h24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <p class="bi-drop-text">支持文件拖拽至框内上传</p>
+              <button type="button" class="bi-btn-outline" id="biSelectFile">选择文件</button>
+              <input type="file" id="biFileInput" accept=".xlsx,.xls,.csv" hidden />
+              <p class="bi-file-name" id="biFileName" hidden></p>
+            </div>
+          </div>
+
+          <div class="bi-help">
+            <div class="bi-help-title">说明</div>
+            <p>下载模板后根据模板内容填写相关信息；</p>
+            <ol>
+              <li><strong>手机号</strong>（必填）：若手机号未注册，则会进行注册；若手机号不存在，则会加入风控管理；若手机号存在，则会更新用户风险等级；</li>
+              <li><strong>品牌ID</strong>（必填）：品牌信息页，门店ID字段；</li>
+              <li>
+                <strong>风险等级</strong>（必填）：1-7 数字
+                <ul>
+                  <li>1：极低风险</li>
+                  <li>2：低风险</li>
+                  <li>3：中低风险</li>
+                  <li>4：中风险</li>
+                  <li>5：中高风险</li>
+                  <li>6：高风险</li>
+                  <li>7：极高风险</li>
+                </ul>
+              </li>
+              <li><strong>操作原因</strong>（必填）：限 50 个汉字；</li>
+            </ol>
+            <p class="bi-help-foot">如果一个用户在多个品牌下都要新增或调整，可以逐条写出</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bi-panel" id="biStep2">
+          <div class="bi-alert" id="biAlert"></div>
+          <div class="bi-table-wrap">
+            <table class="bi-table">
+              <thead>
+                <tr>
+                  <th>手机号<span class="req">*</span></th>
+                  <th>风险等级<span class="req">*</span></th>
+                  <th>操作原因<span class="req">*</span></th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="biTableBody"></tbody>
+            </table>
+            <div class="bi-empty" id="biEmpty" hidden>
+              <div class="bi-empty-icon">
+                <svg viewBox="0 0 64 64" fill="none">
+                  <rect x="12" y="22" width="40" height="28" rx="3" stroke="#c0c4cc" stroke-width="2"/>
+                  <path d="M12 30h40" stroke="#c0c4cc" stroke-width="2"/>
+                  <path d="M24 14h16l4 8H20l4-8z" stroke="#c0c4cc" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <p>暂无数据</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bi-panel" id="biStep3">
+          <div class="bi-success">
+            <div class="bi-success-icon">✓</div>
+            <h4>导入完成</h4>
+            <p id="biSuccessText">成功导入 0 条数据，跳过 0 条错误数据。</p>
+            <ul class="bi-success-list" id="biSuccessList"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bi-footer" id="biFooter">
+        <label class="bi-check" id="biErrorOnlyWrap" hidden>
+          <input type="checkbox" id="biErrorOnly" checked />
+          <span>仅显示错误数据</span>
+        </label>
+        <div class="bi-footer-btns">
+          <button type="button" class="bi-btn-outline" id="biCancel">取消</button>
+          <button type="button" class="bi-btn-primary" id="biImport" hidden>导入</button>
+          <button type="button" class="bi-btn-primary" id="biDone" hidden>完成</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/batch-import.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'components', activeItem: 'batch-import' });</script>
+</body>
+</html>

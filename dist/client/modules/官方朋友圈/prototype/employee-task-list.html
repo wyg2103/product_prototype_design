@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>任务详情 - 朋友圈</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/employee-moments.css" />
+</head>
+<body class="emp-page">
+  <div class="emp-phone task-page">
+    <div class="emp-status light">
+      <span>9:41</span>
+      <span class="icons">●●● ▮</span>
+    </div>
+    <div class="task-nav">
+      <div class="left">
+        <a href="employee-assistant.html">‹</a>
+        <a href="employee-messages.html">✕</a>
+      </div>
+      <h1>任务详情</h1>
+      <button type="button" class="more" aria-label="更多">⋮</button>
+    </div>
+    <div class="task-search-wrap">
+      <div class="task-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="taskSearch" placeholder="请输入朋友圈标题" />
+      </div>
+      <div class="task-filters" id="taskFilters">
+        <button type="button" class="task-filter active" data-filter="todo">待发送 <span id="cntTodo">0</span></button>
+        <button type="button" class="task-filter" data-filter="stopped">已终止 <span id="cntStopped">0</span></button>
+        <button type="button" class="task-filter" data-filter="all">全部 <span id="cntAll">0</span></button>
+      </div>
+    </div>
+    <div class="emp-scroll">
+      <div class="task-list" id="taskList"></div>
+    </div>
+
+    <div class="emp-mask" id="blockMask"></div>
+    <div class="emp-dialog" id="blockDialog">
+      <div class="emp-dialog-body">
+        <div class="block-icon">!</div>
+        <div class="emp-dialog-title" id="blockTitle">无法发表</div>
+        <div class="emp-dialog-desc" id="blockDesc"></div>
+      </div>
+      <div class="emp-dialog-actions single">
+        <button type="button" class="ok" id="blockOk">我知道了</button>
+      </div>
+    </div>
+    <div class="emp-toast" id="empToast"></div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/employee-moments.js"></script>
+  <script>
+    AppLayout.mountPerspectiveSwitch('client');
+    EmployeeMoments.initTaskList();
+  </script>
+</body>
+</html>

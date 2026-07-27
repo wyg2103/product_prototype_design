@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>企微 SCRM｜原型预览</title>
+  <style>
+    :root { --green: #00a870; --text: #1f2937; --muted: #6b7280; --line: #e5e7eb; --bg: #f5f6f6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.55 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 44px 24px 64px; }
+    header { margin-bottom: 28px; }
+    h1 { margin: 0; font-size: 28px; letter-spacing: -.4px; }
+    .intro { margin: 8px 0 0; color: var(--muted); }
+    .notice { display: flex; gap: 10px; align-items: center; margin-top: 20px; padding: 12px 14px; border: 1px solid #cceee1; border-radius: 10px; background: #effaf5; color: #27624f; }
+    .dot { width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; background: var(--green); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+    .card { overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
+    .card-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--line); }
+    .card h2 { margin: 0; font-size: 17px; }
+    .card p { min-height: 42px; margin: 7px 0 0; color: var(--muted); }
+    .links { padding: 8px 18px 14px; }
+    a { color: #087a57; text-decoration: none; }
+    a:hover { color: #005c41; text-decoration: underline; }
+    .page { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0f1f2; }
+    .page:last-child { border-bottom: 0; }
+    .tag { align-self: center; padding: 2px 7px; border-radius: 99px; background: #f2f4f5; color: #77808c; font-size: 11px; white-space: nowrap; }
+    .tag.client { background: #effaf5; color: #087a57; }
+    footer { margin-top: 30px; color: var(--muted); font-size: 12px; }
+    code { padding: 2px 5px; border-radius: 4px; background: #edf0ef; color: #3d4e48; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>企微 SCRM 原型预览</h1>
+      <p class="intro">从此页进入各业务模块的静态原型；官方朋友圈的商家后台与企微客户端页面均已保留。</p>
+      <div class="notice"><span class="dot"></span><span>建议使用本地服务预览：<code>python3 -m http.server 8080</code>，再访问本页。</span></div>
+    </header>
+
+    <section class="grid" aria-label="原型模块列表">
+      <article class="card">
+        <div class="card-head"><h2>官方朋友圈</h2><p>任务创建、发布、终止，以及员工在企微客户端的发表链路。</p></div>
+        <div class="links">
+          <div class="page"><a href="modules/官方朋友圈/prototype/index.html">商家后台：任务列表</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/官方朋友圈/prototype/moment-create.html">商家后台：创建任务</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/官方朋友圈/prototype/detail.html">商家后台：任务详情</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/官方朋友圈/prototype/employee-messages.html">企微客户端：消息入口</a><span class="tag client">员工端</span></div>
+          <div class="page"><a href="modules/官方朋友圈/prototype/employee-task-list.html">企微客户端：任务列表</a><span class="tag client">员工端</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h2>客户群发</h2><p>群发任务创建、下发状态、执行数据与问题自查。</p></div>
+        <div class="links">
+          <div class="page"><a href="modules/客户群发/prototype/mass-send.html">客户群发列表</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/客户群发/prototype/mass-send-create.html">新建群发</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/客户群发/prototype/mass-send-stats.html">任务下发与数据统计</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/客户群发/prototype/mass-send-guide.html">问题自查助手</a><span class="tag">后台</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h2>引流链接</h2><p>引流链接、LBS 加好友链接与接口许可购买。</p></div>
+        <div class="links">
+          <div class="page"><a href="modules/引流链接/prototype/drainage-link.html">引流链接列表</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/引流链接/prototype/drainage-link-create.html">新建引流链接</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/引流链接/prototype/drainage-link-lbs-friend-create.html">新建 LBS 加好友链接</a><span class="tag">后台</span></div>
+          <div class="page"><a href="modules/引流链接/prototype/purchase-license.html">购买接口许可</a><span class="tag">后台</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h2>客户维护</h2><p>员工加好友、聊天与回复等客户维护分析。</p></div>
+        <div class="links"><div class="page"><a href="modules/客户维护/prototype/customer-maintenance.html">客户维护分析</a><span class="tag">后台</span></div></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h2>组件库</h2><p>批量导入流程：模板下载、上传、校验与错误提示。</p></div>
+        <div class="links"><div class="page"><a href="modules/组件库/prototype/component-library.html">批量导入组件</a><span class="tag">后台</span></div></div>
+      </article>
+    </section>
+    <footer>需求与规则文档请查阅 <a href="docs/prd/">docs/prd/</a>；模块范围与端间联动说明见各模块 README。</footer>
+  </main>
+</body>
+</html>

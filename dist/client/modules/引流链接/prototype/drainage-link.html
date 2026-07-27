@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>引流链接 - 企业微信 SCRM</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/drainage-link.css" />
+</head>
+<body>
+  <div id="app-header"></div>
+  <div class="app-body">
+    <div id="app-sidebar"></div>
+    <main class="main-area">
+      <div class="page-tabs">
+        <div class="page-tab">企微概览 <span class="close">×</span></div>
+        <div class="page-tab"><a href="purchase-license.html">购买接口许可</a> <span class="close">×</span></div>
+        <div class="page-tab active">引流链接 <span class="close">×</span></div>
+      </div>
+
+      <section class="dl-content">
+        <div class="dl-scroll">
+          <div class="dl-sub-tabs" id="dlSubTabs">
+            <button type="button" class="dl-sub-tab" data-tab="friend">引流加好友</button>
+            <button type="button" class="dl-sub-tab" data-tab="lbs-friend">LBS加好友</button>
+            <button type="button" class="dl-sub-tab active" data-tab="lbs-group">LBS引流入群</button>
+          </div>
+
+          <div class="filter-card">
+            <div class="dl-filter-row">
+              <div class="filter-item">
+                <label>链接名称</label>
+                <input type="text" id="filterName" placeholder="请输入链接名称" />
+              </div>
+              <div class="filter-item">
+                <label>创建时间</label>
+                <div class="date-range">
+                  <input type="date" id="filterDateStart" placeholder="开始时间" />
+                  <span>至</span>
+                  <input type="date" id="filterDateEnd" placeholder="结束时间" />
+                </div>
+              </div>
+              <div class="filter-item">
+                <label>创建人</label>
+                <select id="filterCreator">
+                  <option value="">请选择</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label>备注</label>
+                <input type="text" id="filterRemark" placeholder="请输入备注" />
+              </div>
+              <button type="button" class="btn-primary" id="btnSearch">搜索</button>
+              <a href="#" class="link-reset" id="btnReset">清空搜索条件</a>
+            </div>
+          </div>
+
+          <div class="dl-toolbar">
+            <a href="drainage-link-create.html?tab=lbs-group" class="btn-primary btn-lg" id="btnCreate">新建链接</a>
+            <button type="button" class="btn-outline btn-lg" id="btnExport">导出EXCEL</button>
+          </div>
+
+          <div class="dl-table-area">
+            <aside class="dl-group-sidebar">
+              <button type="button" class="dl-add-group" id="btnAddGroup">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                添加分组
+              </button>
+              <ul class="dl-group-list" id="groupList"></ul>
+            </aside>
+
+            <div class="dl-table-main">
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>链接名称</th>
+                      <th>渠道活动</th>
+                      <th>创建时间</th>
+                      <th>创建人</th>
+                      <th>分组</th>
+                      <th>备注</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBody"></tbody>
+                </table>
+              </div>
+
+              <div class="pagination-bar dl-pagination">
+                <span>共 <strong id="totalCount">0</strong> 条</span>
+                <select id="pageSizeSelect">
+                  <option value="10">10条/页</option>
+                  <option value="20">20条/页</option>
+                  <option value="50">50条/页</option>
+                </select>
+                <div class="page-btns" id="pageBtns"></div>
+                <div class="goto-page">
+                  前往
+                  <input type="number" id="gotoInput" value="1" min="1" />
+                  页
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/drainage-link-data.js"></script>
+  <script src="js/drainage-link.js"></script>
+  <script>AppLayout.mountLayout({ expandModule: 'growth', activeItem: 'drainage-link' });</script>
+</body>
+</html>
